@@ -1,0 +1,20 @@
+Cnnet <- function(x, y, x_dim, alpha, batch, conv_struct, num_fp, hid, conv_kernel, pool_neighbor, conv_overlap, pool_overlap, conv_stride, pool_stride, init_method, actFun, outFun){
+    
+    if(!is.matrix(x))
+        stop('x must be a matrix')
+    if(!is.numeric(x))
+        stop('x must be a numeric matrix')
+    if(!is.vector(y))
+        stop('y must be a vector')
+    if(!is.numeric(y))
+        stop('y must be a numeric vector')
+    if(nrow(x) != length(y))
+        stop('dimensions of x and y arer inconsistent')
+    
+    
+    num_hid <- length(hid)
+    structure <- c(conv_structure, rep('H',num_hid),'O')
+    cnn <- createCNN(structure, x_dim, num_fp, conv_kernel, conv_overlap, conv_stride, pool_neighbor, pool_overlap, pool_stride, hid, init_method, actFun, outFun)
+    result <- trainCnn(cnn, x, y, epison, batch, learning_rate, epoch)
+    
+}
