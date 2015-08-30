@@ -1,4 +1,4 @@
-activationFunction <- function(value, actFun){
+actFunction <- function(value, actFun){
     if(actFun == 'sigmoid')
         value <- 1/(exp(-value) + 1)
     else if(actFun == 'tanh')

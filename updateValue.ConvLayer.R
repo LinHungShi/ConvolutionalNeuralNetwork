@@ -14,7 +14,7 @@ updateValue.ConvLayer <- function(layer, input){
     actFun <- layer$actFun
     weight <- layer$weight 
     value <- weight %*% input
-    value <- activationFunction(value, actFun)
+    value <- actFunction(value, actFun)
     return (value)
     
 }
