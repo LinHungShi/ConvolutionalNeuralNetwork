@@ -1,26 +1,28 @@
-feedForward <- function(cnn){
+feedForward <- function(x, x_dim, layers, batch){
     
-    layers <- cnn$layer
-    layer_name <- cnn$layer_name
-    input <- cnn$x
-    input_dim <- cnn$x_dim
+    #layer <- layers$layer
+    input <- x
+    input_dim <- x_dim
     pre_numfp <- 1
     simplify <- TRUE
+    batch <- cnn$batch$curr_batch
     
     for(i in 1:length(layers)){
         
-        if(layer_name[[i]] %in% c('CONV','MP')){
+        layer_type <- layers[[i]]$type
+        if(layer_type %in% c('Conv','MP')){
             
             layers[[i]] <- updateValue(layers[[i]], input, input_dim, batch, pre_numfp, simplify)
             stride <- layers[[i]]$stride
             
-            if(layer_name[i] == 'CONV')
+            if(layer_type == 'Conv')
                 window_dim <- layers[[i]]$kernel_dim
             else 
                 window_dim <- layers[[i]]$neighbor_dim
             
             input_dim <- getNewInpDim(input_dim, window_dim, stride)
             input <- layers[[i]]$output
+            pre_numfp <- layers[[i]]$num_fp
             
         }else{
             
@@ -32,7 +34,6 @@ feedForward <- function(cnn){
     }
     
     output <- input
-    cnn$layers <- layers
-    cnn$output <- output
-    return (cnn)
+    
+    return (layers)
 }

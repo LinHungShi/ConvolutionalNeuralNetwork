@@ -5,7 +5,7 @@ aggBasedonMatrix <- function(eval_mat, base_mat, op){
     sapply(1:num_col, function(col){
         
         index <- base_mat[,col]  
-        print(index)
+        
         result[index] <<- (eval(call(op, result[index], eval_mat[,col])))
         
     })

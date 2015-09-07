@@ -1,16 +1,14 @@
-updateValue.MPLayer <- function(layer, input){
+updateValue.MPLayer <- function(layer, input, input_dim, batch, pre_numfp, simplify){
     
-    num_fp <- layer$num_fp
-    ninput_dim <- dim(input)
-    neighbor_dim <- ninput_dim[1] / num_fp
-    
-    pre_value <- input 
-    value <- matrix(NA, num_fp, ninput_dim[2])
-    for(fp_index in 0:(num_fp-1)){
-        sta.row <- fp_index * neighbor_dim + 1
-        fin.row <- (fp_index + 1) * neighbor_dim
-        value[fp_index + 1, ] <- apply(pre_value[sta.row:fin.row, ], 2, max)
-    }
-    
-    return (value)
+    stride <- layer$stride
+    neighbor_dim <- layer$neighbor_dim
+    arr_form<- transKerForm(input, input_dim, stride, neighbor_dim, batch, pre_numfp)
+    layer$input <- arr_form$value
+    layer$input_index <- arr_form$index
+    layer$is.update <- FALSE
+    result<- updateOutput.MPLayer(layer, simplify)
+    layer$output <- result$value
+    layer$max_loc <- result$max_loc
+    layer$is.update <- TRUE
+    return (layer)
 }

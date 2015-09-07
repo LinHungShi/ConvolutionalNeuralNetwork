@@ -1,0 +1,1 @@
+updateOutput <- function(layer, ...) UseMethod('updateOutput')

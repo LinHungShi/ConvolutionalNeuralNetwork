@@ -1,0 +1,1 @@
+updateWgradient <- function(layer,...) UseMethod('updateWgradient')

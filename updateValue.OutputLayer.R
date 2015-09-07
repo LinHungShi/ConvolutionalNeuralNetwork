@@ -1,6 +1,8 @@
 updateValue.OutputLayer <- function(layer, input){
-    weight <-layer$weight
-    value <- input %*% weight
-    value <- outFunction(value, layer$outFun)
-    return (value)
+
+    layer$input <- input
+    layer$is.update <- FALSE
+    layer$output <- updateOutput(layer)
+    layer$is.update <- TRUE
+    return (layer)
 }

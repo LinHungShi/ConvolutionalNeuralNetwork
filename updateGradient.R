@@ -1,0 +1,1 @@
+updateGradient <- function(layer,...) UseMethod('updateGradient')

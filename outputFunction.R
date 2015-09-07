@@ -1,6 +1,7 @@
-outFunction <- function(value, outFun){
-    if(outFun == 'sigmoid')
-        return (1 / (exp(-value) + 1 ))
-    else if(outFun == 'softmax')
+outfunction <- function(value, outfun){
+ 
+    if(outfun == 'softmax')
         return (exp(value) / rowSums(exp(value)))
+    else if(outfun == 'regression')
+        return (value)
 }
